@@ -1,0 +1,31 @@
+name: Python Test
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests
+          echo "✅ Dependencies installed"
+      
+      - name: Check Python files
+        run: |
+          python3 -m py_compile threat_feeds.py
+          python3 -m py_compile analyzer.py
+          python3 -m py_compile reporter.py
+          echo "✅ All Python files syntax OK"
+      
+      - name: Success
+        run: echo "✅✅✅ THREAT INTELLIGENCE TOOLKIT READY! ✅✅✅"
